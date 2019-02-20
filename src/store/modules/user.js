@@ -6,7 +6,9 @@ const user = {
     token: getToken(),
     name: '',
     avatar: '',
-    roles: []
+    roles: [],
+    userList: [],
+    userTotal: null
   },
 
   mutations: {
@@ -21,12 +23,16 @@ const user = {
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles;
+    },
+    SET_USER_LIST: (state, payload) => {
+      state.userList = payload.items;
+      state.userTotal = payload.totalItems;
     }
   },
 
   actions: {
     // 登录
-    Login({ commit }, userInfo) {
+    login({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
         api
           .login(userInfo)
@@ -44,7 +50,7 @@ const user = {
     },
 
     // 获取用户信息
-    GetUserInfo({ commit }) {
+    getUserInfo({ commit }) {
       return new Promise((resolve, reject) => {
         api
           .getUserInfo()
@@ -78,11 +84,28 @@ const user = {
     // },
 
     // 前端 登出
-    FedLogOut({ commit }) {
+    fedLogOut({ commit }) {
       return new Promise(resolve => {
         commit('SET_TOKEN', '');
         removeToken();
         resolve();
+      });
+    },
+    // 获取用户列表
+    getUserList({ commit }, payload) {
+      return new Promise((resolve, reject) => {
+        api
+          .fetchUserList(payload)
+          .then(res => {
+            console.log(res);
+            if (res.code === 0) {
+              commit('SET_USER_LIST', res.result);
+            }
+            resolve();
+          })
+          .catch(error => {
+            reject(error);
+          });
       });
     }
   }

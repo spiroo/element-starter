@@ -20,7 +20,7 @@ const app = {
     }
   },
   actions: {
-    SetLoading({ commit }, status) {
+    setLoading({ commit }, status) {
       commit('SET_LOADING', status);
     },
     setSize({ commit }, size) {

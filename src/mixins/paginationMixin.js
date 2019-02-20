@@ -5,7 +5,6 @@ export default {
         page: 1,
         pageSize: 20
       },
-      pageTotal: null,
       pageSizes: [10, 20, 30, 40, 50]
     };
   },

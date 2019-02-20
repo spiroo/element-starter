@@ -24,8 +24,7 @@ export default {
   right: 0;
   top: 0;
   bottom: 0;
-  //background-color: rgba(48, 65, 86, 0.2);
-  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.9);
   font-size: 150px;
   display: flex;
   flex-direction: row;

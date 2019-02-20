@@ -15,5 +15,18 @@ export default {
       url: '/userinfo',
       method: 'get'
     });
+  },
+  // 获取用户列表
+  fetchUserList(params) {
+    const query = {
+      cmd: 'entrance',
+      cmd_op: 'userList',
+      ...params
+    };
+    return request({
+      url: '/service/cloud/httpCommandService',
+      method: 'get',
+      data: query
+    });
   }
 };
