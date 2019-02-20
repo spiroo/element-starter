@@ -12,7 +12,11 @@ module.exports = {
       const argv = process.argv;
       const mode = argv[argv.indexOf('--project-mode') + 1];
       args[0]['process.env'].MODE = `"${mode}"`;
-      args[0]['process.env'].BASE_API = '"http://192.168.16.98:7003"';
+      let apiUrl = '"http://192.168.16.98:7003"';
+      if (mode === 'pro') {
+        apiUrl = '"http://127.0.0.1:7003"';
+      }
+      args[0]['process.env'].BASE_API = apiUrl;
       return args;
     });
 
