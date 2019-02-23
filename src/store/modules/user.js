@@ -92,21 +92,33 @@ const user = {
       });
     },
     // 获取用户列表
-    getUserList({ commit }, payload) {
-      return new Promise((resolve, reject) => {
-        api
-          .fetchUserList(payload)
-          .then(res => {
-            console.log(res);
-            if (res.code === 0) {
-              commit('SET_USER_LIST', res.result);
-            }
-            resolve();
-          })
-          .catch(error => {
-            reject(error);
-          });
-      });
+    // getUserList({ commit }, payload) {
+    //   return new Promise((resolve, reject) => {
+    //     api
+    //       .fetchUserList(payload)
+    //       .then(res => {
+    //         console.log(res);
+    //         if (res.code === 0) {
+    //           commit('SET_USER_LIST', res.result);
+    //         }
+    //         resolve();
+    //       })
+    //       .catch(error => {
+    //         reject(error);
+    //       });
+    //   });
+    // }
+    async getUserList({ commit }, payload) {
+      try {
+        const response = await api.fetchUserList(payload);
+        console.log('response = ', response);
+        if (response.code === 0) {
+          commit('SET_USER_LIST', response.result);
+        }
+        return Promise.resolve(response.result);
+      } catch (error) {
+        return Promise.reject(error);
+      }
     }
   }
 };

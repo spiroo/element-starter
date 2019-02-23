@@ -40,6 +40,8 @@ export default {
         pageSize: this.pageParams.pageSize,
         pageCount: this.pageParams.page,
         userType: 0
+      }).then(res => {
+        console.log('res == ', res);
       });
     }
   }
