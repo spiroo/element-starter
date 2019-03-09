@@ -24,7 +24,7 @@ export default {
       ...params
     };
     return request({
-      url: '/service/cloud/httpCommandService',
+      url: '/server/service/cloud/httpCommandService',
       method: 'get',
       data: query
     });

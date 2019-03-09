@@ -7,19 +7,6 @@ function resolve(dir) {
 module.exports = {
   baseUrl: '/',
   chainWebpack: config => {
-    // 这里是对环境的配置，不同环境对应不同的BASE_API，以便axios的请求地址不同
-    config.plugin('define').tap(args => {
-      const argv = process.argv;
-      const mode = argv[argv.indexOf('--project-mode') + 1];
-      args[0]['process.env'].MODE = `"${mode}"`;
-      let apiUrl = '"http://192.168.16.98:7003"';
-      if (mode === 'pro') {
-        apiUrl = '"http://127.0.0.1:7003"';
-      }
-      args[0]['process.env'].BASE_API = apiUrl;
-      return args;
-    });
-
     // svg loader
     const svgRule = config.module.rule('svg'); // 找到svg-loader
     svgRule.uses.clear(); // 清除已有的loader, 如果不这样做会添加在此loader之后
@@ -39,6 +26,16 @@ module.exports = {
   },
   devServer: {
     open: true,
-    port: 9523
+    port: 9523,
+    proxy: {
+      '/server': {
+        target: 'http://jsonplaceholder.typicode.com', //对应自己的接口
+        changeOrigin: true,
+        ws: true,
+        pathRewrite: {
+          '^/server': ''
+        }
+      }
+    }
   }
 };
