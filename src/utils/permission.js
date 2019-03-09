@@ -15,20 +15,24 @@ router.beforeEach((to, from, next) => {
       });
       NProgress.done();
     } else {
-      // 实时拉取用户的信息
-      store
-        .dispatch('getUserInfo')
-        .then(() => {
-          next();
-        })
-        .catch(err => {
-          store.dispatch('fedLogOut').then(() => {
-            Message.error('拉取用户信息失败，请重新登录！' + err);
-            next({
-              path: '/'
+      if (store.getters.name === '') {
+        // 实时拉取用户的信息
+        store
+          .dispatch('getUserInfo')
+          .then(() => {
+            next();
+          })
+          .catch(err => {
+            store.dispatch('fedLogOut').then(() => {
+              Message.error('拉取用户信息失败，请重新登录！' + err);
+              next({
+                path: '/'
+              });
             });
           });
-        });
+      } else {
+        next();
+      }
     }
   } else {
     if (whiteList.includes(to.path)) {
