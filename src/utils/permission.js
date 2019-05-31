@@ -3,7 +3,6 @@ import store from '@/store';
 import { getToken } from './auth';
 import NProgress from 'nprogress'; // 进度条
 import 'nprogress/nprogress.css'; // 进度条样式
-import { Message } from 'element-ui';
 
 const whiteList = ['/login', '/', '/about', '/user']; // 不重定向白名单
 router.beforeEach((to, from, next) => {
@@ -24,7 +23,7 @@ router.beforeEach((to, from, next) => {
           })
           .catch(err => {
             store.dispatch('fedLogOut').then(() => {
-              Message.error('拉取用户信息失败，请重新登录！' + err);
+              // Message.error('拉取用户信息失败，请重新登录！' + err);
               next({
                 path: '/'
               });
